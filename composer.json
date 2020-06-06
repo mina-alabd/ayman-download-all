@@ -1,0 +1,116 @@
+{
+  "name": "rudloff/alltube",
+  "description": "HTML GUI for youtube-dl",
+  "license": "GPL-3.0-only",
+  "homepage": "http://alltubedownload.net/",
+  "type": "project",
+  "require": {
+    "ext-intl": "*",
+    "ext-json": "*",
+    "aura/session": "^2.1",
+    "barracudanetworks/archivestream-php": "^1.0",
+    "guzzlehttp/guzzle": "^6.5",
+    "jawira/case-converter": "^3.4",
+    "mathmarques/smarty-view": "^1.1",
+    "npm-asset/open-sans-fontface": "^1.4",
+    "rinvex/countries": "^6.1",
+    "symfony/process": "^4.0",
+    "symfony/translation": "^4.0",
+    "symfony/yaml": "^4.0",
+    "zonuexe/http-accept-language": "^0.4.1"
+  },
+  "require-dev": {
+    "anam/phantomjs-linux-x86-binary": "^2.1",
+    "consolidation/robo": "^2.0",
+    "ffmpeg/ffmpeg": "^4.1",
+    "heroku/heroku-buildpack-php": "^162.0",
+    "php-mock/php-mock-mockery": "^1.3",
+    "phpro/grumphp": "^0.18.0",
+    "phpstan/phpstan": "^0.12.25",
+    "phpunit/phpunit": "^8.4",
+    "roave/security-advisories": "dev-master",
+    "smarty-gettext/smarty-gettext": "^1.6",
+    "squizlabs/php_codesniffer": "^3.5",
+    "symfony/error-handler": "^5.0",
+    "symfony/var-dumper": "^5.0",
+    "ytdl-org/youtube-dl": "^2020.05"
+  },
+  "extra": {
+    "paas": {
+      "nginx-includes": [
+        "resources/nginx.conf"
+      ]
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "ytdl-org/youtube-dl",
+        "version": "2020.05.08",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/ytdl-org/youtube-dl/archive/2020.05.08.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "ffmpeg/ffmpeg",
+        "version": "4.1.4",
+        "dist": {
+          "url": "https://www.johnvansickle.com/ffmpeg/old-releases/ffmpeg-4.1.4-amd64-static.tar.xz",
+          "type": "xz"
+        },
+        "bin": [
+          "ffmpeg"
+        ]
+      }
+    }
+  ],
+  "authors": [
+    {
+      "name": "Pierre Rudloff",
+      "email": "contact@rudloff.pro",
+      "homepage": "https://rudloff.pro/",
+      "role": "Developer"
+    },
+    {
+      "name": "Olivier Haquette",
+      "email": "contact@olivierhaquette.fr",
+      "homepage": "http://olivierhaquette.fr/",
+      "role": "Designer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Alltube\\": "classes/",
+      "Alltube\\Stream\\": "classes/streams/",
+      "Alltube\\Exception\\": "classes/exceptions/",
+      "Alltube\\Controller\\": "controllers/",
+      "Alltube\\Test\\": "tests/"
+    }
+  },
+  "scripts": {
+    "compile": "composer install --ignore-platform-reqs",
+    "lint": "grumphp run --ansi",
+    "test": "phpunit",
+    "release": "robo release",
+    "update-locales": [
+      "tsmarty2c.php templates > i18n/template.pot",
+      "xgettext --omit-header -kt -j -o i18n/template.pot classes/*.php classes/*/*.php controllers/*"
+    ],
+    "youtube-dl": "vendor/ytdl-org/youtube-dl/youtube_dl/__main__.py"
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "7.3.11"
+    }
+  }
+}
